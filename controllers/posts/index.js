@@ -1,4 +1,4 @@
-var base = process.env.PWD;
+var base = process.cwd();
 var Post = require(base + '/models/posts');
 
 var createPost = function(req, res) {
@@ -53,4 +53,4 @@ module.exports = {
   getPost,
   updatePost,
   deletePost
-}
+};

@@ -12,5 +12,5 @@ var responseValidator = function(expectedStatusCode, validationFunction) {
 };
 
 module.exports = {
-  reponseValidator
+  responseValidator
 };
