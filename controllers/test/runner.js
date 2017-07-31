@@ -28,6 +28,7 @@ describe("Post API", function() {
     });
   });
   
+  // Test creating a post. 
   describe("Create Post", function() {
     it("should create a new post", function(done) {
 
@@ -48,5 +49,65 @@ describe("Post API", function() {
 
       posts.createPost(req, res);
     });
+  });
+  
+  // Test getting all posts. 
+  describe("GET Posts", function() {
+    it("should get an array of posts", function(done) {
+
+      var req = {};
+
+      var res = testUtils.responseValidator(200, function(posts) {
+        posts.length.should.equal(2);
+        done();
+      });
+
+      posts.getPosts(req, res);
+    });
+  });
+  
+  // Test getting one post. 
+  describe("GET Post", function() {
+    it("should get a post object by id", function(done) {
+
+      var req = {
+        params: {
+          id: id
+        }
+      };
+
+      var res = testUtils.responseValidator(200, function(post) {
+        post.title.should.equal('Dummy');
+        post.author.should.equal('Someone');
+        done();
+      });
+
+      posts.getPost(req, res);
+    });
+    
+    // Test error
+    it("should throw an error for invalid post id", function(done) {
+
+      var req = {
+        params: {
+          id: 'sdfhjdk45'
+        }
+      };
+
+      var res = testUtils.responseValidator(500, function(err) {
+        done();
+      });
+
+      posts.getPost(req, res);
+    });
+  });
+  
+  
+  // Clear data from test database and close connection.
+  after(function(done) {
+    Post.remove({}, function(err) {
+      if(err) { console.log(err); };
+    });
+    mongoose.disconnect(done);
   });
 });
