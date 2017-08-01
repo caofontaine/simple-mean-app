@@ -40,7 +40,7 @@ var updatePost = function(req, res) {
   });
 };
 
-var deletePost = function() {
+var deletePost = function(req, res) {
   Post.findByIdAndRemove(req.params.id, function(err, post){
     if(err) {res.send(500, err);}
     res.json(200, {'deleted': true});

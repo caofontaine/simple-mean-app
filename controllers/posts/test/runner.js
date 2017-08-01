@@ -102,6 +102,44 @@ describe("Post API", function() {
     });
   });
   
+  // Test updating a post. 
+  describe("Update Post", function() {
+    it("should update a post properly", function(done) {
+
+      var req = {
+        params: { id: id },
+        body: {
+          title: 'Hello World!'
+        }
+      };
+
+      var res = testUtils.responseValidator(200, function(post) {
+        post.should.have.property('title');
+        post.title.should.equal('Hello World!');
+        done();
+      });
+
+      posts.updatePost(req, res);
+    });
+  });
+  
+  // Test deleting a post. 
+  describe("Delete Post", function() {
+    it("should delete a post successfully", function(done) {
+
+      var req = {
+        params: { id: id }
+      };
+
+      var res = testUtils.responseValidator(200, function(obj) {
+        obj.should.have.property('deleted');
+        obj.deleted.should.equal(true);
+        done();
+      });
+
+      posts.deletePost(req, res);
+    });
+  });
   
   // Clear data from test database and close connection.
   after(function(done) {
